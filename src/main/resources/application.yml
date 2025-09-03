@@ -1,3 +1,13 @@
 spring:
   application:
     name: s3-test
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAXUVWRENZMBIUYAGG
+      secret-key: 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
+    region:
+      static: us-west-2
+    s3:
+      bucket-name: matheusasdasdsa
