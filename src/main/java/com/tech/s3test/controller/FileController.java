@@ -22,7 +22,7 @@ public class FileController {
     @ResponseStatus(HttpStatus.CREATED)
     public void upload(@Valid @RequestParam("file") fileReqDto file) {
         String requestId = controllerUtils.generateUUID();
-        log.info("ID[{}] Request file name '{}' received", requestId, file.file().getOriginalFilename());
+        log.info("ID[{}] Request received", requestId);
         fileService.saveFile(file, requestId);
     }
 }
