@@ -1,5 +1,6 @@
 package com.tech.s3test.service;
 
+import com.tech.s3test.configuration.aws.BucketProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileService {
     private final S3Client s3Client;
-    @Value("${cloud.aws.s3.bucket-name}")
-    private String bucketName;
+    private final BucketProperties bucketProperties;
 
     public void saveFile(MultipartFile file, String requestId) {
         String originalFileName = file.getOriginalFilename();
@@ -40,7 +40,7 @@ public class FileService {
     private void s3Save(MultipartFile file, String fileName) {
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(bucketName)
+                    .bucket(bucketProperties.getBucketName())
                     .key(fileName)
                     .contentType(file.getContentType())
                     .build();
