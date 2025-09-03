@@ -1,4 +1,4 @@
-package com.tech.s3test.configuration;
+package com.tech.s3test.configuration.aws;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
