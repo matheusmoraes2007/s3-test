@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix = "aws")
 @Data
-public class bucketProperties {
+public class BucketProperties {
     private String bucketName;
     private String region;
     private String secretKey;
