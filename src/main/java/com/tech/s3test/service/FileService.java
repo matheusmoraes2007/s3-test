@@ -14,7 +14,7 @@ import java.util.UUID;
 public class FileService {
     private final StoragePort storagePort;
 
-    public SaveFileResDto saveFile(MultipartFile file) {
+    public SaveFileResDto save(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
         this.validateFileName(originalFileName);
         String fileExtension = originalFileName.substring(file.getOriginalFilename().lastIndexOf("."));
@@ -23,7 +23,7 @@ public class FileService {
         return new SaveFileResDto(fileName);
     }
 
-    public FileResDto downloadFile(String fileName) {
+    public FileResDto get(String fileName) {
         this.validateFileName(fileName);
         return storagePort.get(fileName);
     }

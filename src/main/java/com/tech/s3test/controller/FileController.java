@@ -21,12 +21,12 @@ public class FileController {
     public ResponseEntity<SaveFileResDto> upload(@RequestPart("file") MultipartFile file) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(fileService.saveFile(file));
+                .body(fileService.save(file));
     }
 
     @GetMapping("/{fileName}")
     public ResponseEntity<byte[]> download(@PathVariable("fileName") String fileName) {
-        FileResDto file = fileService.downloadFile(fileName);
+        FileResDto file = fileService.get(fileName);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(file.contentType()))
