@@ -18,14 +18,13 @@ public class FileService {
         String originalFileName = file.getOriginalFilename();
         this.validateFileName(originalFileName);
         String fileExtension = originalFileName.substring(file.getOriginalFilename().lastIndexOf("."));
-        String fileName = UUID.randomUUID() + fileExtension;
-        storagePort.save(fileName, file);
-        return new SaveFileResDto(fileName);
+        String key = UUID.randomUUID() + fileExtension;
+        storagePort.save(key, file);
+        return new SaveFileResDto(key);
     }
 
-    public FileResDto get(String fileName) {
-        this.validateFileName(fileName);
-        return storagePort.get(fileName);
+    public FileResDto get(String key) {
+        return storagePort.get(key);
     }
 
     private void validateFileName(String fileName) {
@@ -36,5 +35,4 @@ public class FileService {
             throw new RuntimeException("File extension is empty");
         }
     }
-
 }

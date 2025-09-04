@@ -24,13 +24,13 @@ public class FileController {
                 .body(fileService.save(file));
     }
 
-    @GetMapping("/{fileName}")
-    public ResponseEntity<byte[]> download(@PathVariable("fileName") String fileName) {
-        FileResDto file = fileService.get(fileName);
+    @GetMapping("/{key}")
+    public ResponseEntity<byte[]> download(@PathVariable("key") String key) {
+        FileResDto file = fileService.get(key);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(file.contentType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + key + "\"")
                 .body(file.file());
     }
 }
