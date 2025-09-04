@@ -32,6 +32,11 @@ public class FileService {
         storagePort.update(key, file);
     }
 
+    public void deleteByKey(String key) {
+        this.validateFileName(key);
+        storagePort.delete(key);
+    }
+
     private void validateFileName(String fileName) {
         if (fileName == null || fileName.isEmpty()) {
             throw new RuntimeException("File name is empty");

@@ -44,4 +44,12 @@ public class FileController {
                 .ok()
                 .build();
     }
+
+    @DeleteMapping("/{key}")
+    public ResponseEntity<Void> deleteByKey(@PathVariable("key") String key) {
+        fileService.deleteByKey(key);
+        return ResponseEntity
+                .ok()
+                .build();
+    }
 }
