@@ -1,5 +1,6 @@
 package com.tech.s3test.service;
 
+import com.tech.s3test.dto.req.FileResDto;
 import com.tech.s3test.dto.res.SaveFileResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,11 @@ public class FileService {
         String fileName = UUID.randomUUID() + fileExtension;
         s3Service.save(file, fileName);
         return new SaveFileResDto(fileName);
+    }
+
+    public FileResDto downloadFile(String fileName) {
+        this.validateFileName(fileName);
+        return s3Service.download(fileName);
     }
 
     private void validateFileName(String fileName) {
