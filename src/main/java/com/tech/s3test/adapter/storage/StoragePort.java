@@ -2,6 +2,7 @@ package com.tech.s3test.adapter.storage;
 
 import com.tech.s3test.configuration.aws.BucketProperties;
 import com.tech.s3test.dto.res.FileResDto;
+import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,7 @@ public class StoragePort implements StorageAdapter {
     @Override
     public void save(String key, MultipartFile file) {
         if (this.verifyIfExists(key))
-            throw new RuntimeException("File already exists");
+            throw new ResourceAlreadyExistsException("File already exists");
         this.putObject(key, file);
     }
 
