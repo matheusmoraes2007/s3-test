@@ -6,4 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface StorageAdapter {
     void save(String key, MultipartFile file);
     FileResDto get(String key);
+    void update(String key, MultipartFile file);
+    void delete(String key);
 }
