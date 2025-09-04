@@ -1,6 +1,6 @@
 package com.tech.s3test.controller;
 
-import com.tech.s3test.dto.req.FileResDto;
+import com.tech.s3test.dto.res.FileResDto;
 import com.tech.s3test.dto.res.SaveFileResDto;
 import com.tech.s3test.service.FileService;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.tech.s3test.dto.req;
+package com.tech.s3test.dto.res;
 
 public record FileResDto(
         byte[] file,

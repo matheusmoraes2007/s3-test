@@ -1,7 +1,7 @@
 package com.tech.s3test.adapter.storage;
 
 import com.tech.s3test.configuration.aws.BucketProperties;
-import com.tech.s3test.dto.req.FileResDto;
+import com.tech.s3test.dto.res.FileResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

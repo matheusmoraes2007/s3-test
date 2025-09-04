@@ -1,7 +1,7 @@
 package com.tech.s3test.service;
 
 import com.tech.s3test.adapter.storage.StoragePort;
-import com.tech.s3test.dto.req.FileResDto;
+import com.tech.s3test.dto.res.FileResDto;
 import com.tech.s3test.dto.res.SaveFileResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
