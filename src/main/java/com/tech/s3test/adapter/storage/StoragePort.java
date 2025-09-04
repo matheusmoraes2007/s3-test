@@ -42,6 +42,13 @@ public class StoragePort implements StorageAdapter {
         }
     }
 
+    @Override
+    public void update(String key, MultipartFile file) {
+        if (!this.verifyIfExists(key))
+            throw new RuntimeException("File not found");
+        this.putObject(key, file);
+    }
+
     private boolean verifyIfExists(String key) {
         try {
             HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
