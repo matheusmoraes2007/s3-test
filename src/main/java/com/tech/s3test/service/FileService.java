@@ -23,7 +23,7 @@ public class FileService {
         return new SaveFileResDto(key);
     }
 
-    public FileResDto get(String key) {
+    public FileResDto download(String key) {
         return storagePort.get(key);
     }
 

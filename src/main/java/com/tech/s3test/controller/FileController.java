@@ -18,7 +18,7 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<SaveFileResDto> upload(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<SaveFileResDto> save(@RequestPart("file") MultipartFile file) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(fileService.save(file));
@@ -26,7 +26,7 @@ public class FileController {
 
     @GetMapping("/{key}")
     public ResponseEntity<byte[]> download(@PathVariable("key") String key) {
-        FileResDto file = fileService.get(key);
+        FileResDto file = fileService.download(key);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(file.contentType()))
