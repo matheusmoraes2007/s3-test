@@ -28,7 +28,7 @@ public class StoragePort implements StorageAdapter {
     }
 
     @Override
-    public FileResDto get(String key) {
+    public FileResDto getByKey(String key) {
         try {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                     .bucket(bucketProperties.getBucketName())
@@ -47,14 +47,14 @@ public class StoragePort implements StorageAdapter {
     }
 
     @Override
-    public void update(String key, MultipartFile file) {
+    public void updateByKey(String key, MultipartFile file) {
         if (!this.verifyIfExists(key))
             throw new ResourceNotFoundException("File not found");
         this.putObject(key, file);
     }
 
     @Override
-    public void delete(String key) {
+    public void deleteByKey(String key) {
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucketProperties.getBucketName())
                 .key(key)
