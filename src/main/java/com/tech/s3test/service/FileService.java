@@ -16,7 +16,7 @@ public class FileService {
         String originalFileName = file.getOriginalFilename();
         this.validateFileName(originalFileName);
         String fileExtension = originalFileName.substring(file.getOriginalFilename().lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString() + fileExtension;
+        String fileName = UUID.randomUUID() + fileExtension;
         s3Service.save(file, fileName);
         return new SaveFileResDto(fileName);
     }
