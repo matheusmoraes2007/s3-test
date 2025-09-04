@@ -3,7 +3,7 @@ spring:
     name: s3-test
 
 aws:
-  access-key: AKIAXUVWRENZMBIUYAGG
-  secret-key: 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
-  region: us-west-2
-  bucket-name: matheusasdasdsa
+  access-key: ${ACCESS_KEY}
+  secret-key: ${SECRET_KEY}
+  region: ${BUCKET_REGION}
+  bucket-name: ${BUCKET_NAME}
