@@ -49,6 +49,15 @@ public class StoragePort implements StorageAdapter {
         this.putObject(key, file);
     }
 
+    @Override
+    public void delete(String key) {
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketProperties.getBucketName())
+                .key(key)
+                .build();
+        s3Client.deleteObject(deleteObjectRequest);
+    }
+
     private boolean verifyIfExists(String key) {
         try {
             HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
