@@ -12,7 +12,7 @@ import java.util.UUID;
 public class FileService {
     private final S3Service s3Service;
 
-    public SaveFileResDto saveFile(MultipartFile file, String requestId) {
+    public SaveFileResDto saveFile(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
         this.validateFileName(originalFileName);
         String fileExtension = originalFileName.substring(file.getOriginalFilename().lastIndexOf("."));

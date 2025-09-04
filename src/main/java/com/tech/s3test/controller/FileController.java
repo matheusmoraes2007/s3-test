@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/file")
-@Slf4j
 @RequiredArgsConstructor
 public class FileController {
     private final ControllerUtils controllerUtils;
@@ -21,10 +20,8 @@ public class FileController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<SaveFileResDto> upload(@RequestPart("file") MultipartFile file) {
-        String requestId = controllerUtils.generateUUID();
-        log.info("ID[{}] Request received", requestId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(fileService.saveFile(file, requestId));
+                .body(fileService.saveFile(file));
     }
 }
