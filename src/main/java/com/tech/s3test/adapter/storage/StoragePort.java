@@ -20,6 +20,8 @@ public class StoragePort implements StorageAdapter {
 
     @Override
     public void save(String key, MultipartFile file) {
+        if (this.verifyIfExists(key))
+            throw new RuntimeException("File already exists");
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketProperties.getBucketName())
@@ -46,6 +48,19 @@ public class StoragePort implements StorageAdapter {
             );
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private boolean verifyIfExists(String key) {
+        try {
+            HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
+                    .bucket(bucketProperties.getBucketName())
+                    .key(key)
+                    .build();
+            s3Client.headObject(headObjectRequest);
+            return true;
+        } catch (NoSuchKeyException ex) {
+            return false;
         }
     }
 }
