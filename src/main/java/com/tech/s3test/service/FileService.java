@@ -23,11 +23,11 @@ public class FileService {
         return new SaveFileResDto(key);
     }
 
-    public FileResDto download(String key) {
+    public FileResDto downloadByKey(String key) {
         return storagePort.get(key);
     }
 
-    public void update(String key, MultipartFile file) {
+    public void putUpdateByKey(String key, MultipartFile file) {
         this.validateFileName(key);
         storagePort.update(key, file);
     }

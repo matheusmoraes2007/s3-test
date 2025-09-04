@@ -25,8 +25,8 @@ public class FileController {
     }
 
     @GetMapping("/{key}")
-    public ResponseEntity<byte[]> download(@PathVariable("key") String key) {
-        FileResDto file = fileService.download(key);
+    public ResponseEntity<byte[]> downloadByKey(@PathVariable("key") String key) {
+        FileResDto file = fileService.downloadByKey(key);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(file.contentType()))
@@ -35,11 +35,11 @@ public class FileController {
     }
 
     @PutMapping(value = "/{key}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> update(
+    public ResponseEntity<Void> putUpdateByKey(
             @PathVariable("key") String key,
             @RequestPart("file") MultipartFile file
     ) {
-        fileService.update(key, file);
+        fileService.putUpdateByKey(key, file);
         return ResponseEntity
                 .ok()
                 .build();
