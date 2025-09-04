@@ -33,4 +33,15 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + key + "\"")
                 .body(file.file());
     }
+
+    @PutMapping(value = "/{key}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> update(
+            @PathVariable("key") String key,
+            @RequestPart("file") MultipartFile file
+    ) {
+        fileService.update(key, file);
+        return ResponseEntity
+                .ok()
+                .build();
+    }
 }

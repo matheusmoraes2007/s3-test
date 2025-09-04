@@ -27,6 +27,11 @@ public class FileService {
         return storagePort.get(key);
     }
 
+    public void update(String key, MultipartFile file) {
+        this.validateFileName(key);
+        storagePort.update(key, file);
+    }
+
     private void validateFileName(String fileName) {
         if (fileName == null || fileName.isEmpty()) {
             throw new RuntimeException("File name is empty");
