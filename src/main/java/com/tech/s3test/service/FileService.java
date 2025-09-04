@@ -25,17 +25,17 @@ public class FileService {
     }
 
     public FileResDto downloadByKey(String key) {
-        return storagePort.getByKey(key);
+        return storagePort.get(key);
     }
 
     public void putUpdateByKey(String key, MultipartFile file) {
         this.validateFileName(key);
-        storagePort.updateByKey(key, file);
+        storagePort.update(key, file);
     }
 
     public void deleteByKey(String key) {
         this.validateFileName(key);
-        storagePort.deleteByKey(key);
+        storagePort.delete(key);
     }
 
     private void validateFileName(String fileName) {

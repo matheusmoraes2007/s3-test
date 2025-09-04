@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageAdapter {
     void save(String key, MultipartFile file);
-    FileResDto getByKey(String key);
-    void updateByKey(String key, MultipartFile file);
-    void deleteByKey(String key);
+    FileResDto get(String key);
+    void update(String key, MultipartFile file);
+    void delete(String key);
 }
