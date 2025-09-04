@@ -1,5 +1,6 @@
 package com.tech.s3test.service;
 
+import com.tech.s3test.adapter.storage.StoragePort;
 import com.tech.s3test.dto.req.FileResDto;
 import com.tech.s3test.dto.res.SaveFileResDto;
 import lombok.RequiredArgsConstructor;
@@ -11,20 +12,20 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class FileService {
-    private final S3Service s3Service;
+    private final StoragePort storagePort;
 
     public SaveFileResDto saveFile(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
         this.validateFileName(originalFileName);
         String fileExtension = originalFileName.substring(file.getOriginalFilename().lastIndexOf("."));
         String fileName = UUID.randomUUID() + fileExtension;
-        s3Service.save(file, fileName);
+        storagePort.save(fileName, file);
         return new SaveFileResDto(fileName);
     }
 
     public FileResDto downloadFile(String fileName) {
         this.validateFileName(fileName);
-        return s3Service.download(fileName);
+        return storagePort.get(fileName);
     }
 
     private void validateFileName(String fileName) {
