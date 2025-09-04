@@ -1,4 +1,4 @@
-package com.tech.s3test.service;
+package com.tech.s3test.adapter.storage;
 
 import com.tech.s3test.configuration.aws.BucketProperties;
 import com.tech.s3test.dto.req.FileResDto;
@@ -14,15 +14,16 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class S3Service {
+public class StoragePort implements StorageAdapter {
     private final S3Client s3Client;
     private final BucketProperties bucketProperties;
 
-    public void save(MultipartFile file, String fileName) {
+    @Override
+    public void save(String key, MultipartFile file) {
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketProperties.getBucketName())
-                    .key(fileName)
+                    .key(key)
                     .contentType(file.getContentType())
                     .build();
             s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
@@ -31,11 +32,12 @@ public class S3Service {
         }
     }
 
-    public FileResDto download(String fileName) {
+    @Override
+    public FileResDto get(String key) {
         try {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                     .bucket(bucketProperties.getBucketName())
-                    .key(fileName)
+                    .key(key)
                     .build();
             ResponseInputStream<GetObjectResponse> s3Object = s3Client.getObject(getObjectRequest);
             return new FileResDto(
