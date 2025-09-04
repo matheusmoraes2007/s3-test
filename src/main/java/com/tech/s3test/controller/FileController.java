@@ -4,7 +4,6 @@ import com.tech.s3test.dto.res.SaveFileResDto;
 import com.tech.s3test.service.FileService;
 import com.tech.s3test.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
