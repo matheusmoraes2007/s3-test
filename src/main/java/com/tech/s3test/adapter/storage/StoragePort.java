@@ -3,6 +3,7 @@ package com.tech.s3test.adapter.storage;
 import com.tech.s3test.configuration.aws.BucketProperties;
 import com.tech.s3test.dto.res.FileResDto;
 import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
+import com.tech.s3test.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +39,8 @@ public class StoragePort implements StorageAdapter {
                     s3Object.readAllBytes(),
                     s3Object.response().contentType()
             );
+        } catch (NoSuchKeyException e) {
+            throw new ResourceNotFoundException("File not found");
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -46,7 +49,7 @@ public class StoragePort implements StorageAdapter {
     @Override
     public void update(String key, MultipartFile file) {
         if (!this.verifyIfExists(key))
-            throw new RuntimeException("File not found");
+            throw new ResourceNotFoundException("File not found");
         this.putObject(key, file);
     }
 
