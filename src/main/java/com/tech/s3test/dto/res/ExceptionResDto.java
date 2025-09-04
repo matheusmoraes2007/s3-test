@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import java.time.OffsetDateTime;
 
 public record ExceptionResDto(
-        HttpStatus status,
+        int status,
         String error,
         OffsetDateTime timestamp
 ) {
