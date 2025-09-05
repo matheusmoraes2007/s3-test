@@ -18,10 +18,7 @@ public class FileService {
 
     @Log
     public SaveFileResDto save(MultipartFile file) {
-        String originalFileName = file.getOriginalFilename();
-        this.validateFileName(originalFileName);
-        String fileExtension = originalFileName.substring(file.getOriginalFilename().lastIndexOf("."));
-        String key = UUID.randomUUID() + fileExtension;
+        String key = this.getKey(file);
         storagePort.save(key, file);
         return new SaveFileResDto(key);
     }
@@ -41,12 +38,15 @@ public class FileService {
         storagePort.delete(key);
     }
 
-    private void validateFileName(String fileName) {
+    private String getKey(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
         if (fileName == null || fileName.isEmpty()) {
             throw new MissingStatementException("File name is empty");
         }
         if (!fileName.contains(".")) {
             throw new MissingStatementException("File extension is empty");
         }
+        String fileExtension = fileName.substring(file.getOriginalFilename().lastIndexOf("."));
+        return UUID.randomUUID() + fileExtension;
     }
 }
