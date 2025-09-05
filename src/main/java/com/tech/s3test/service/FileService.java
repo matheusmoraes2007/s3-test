@@ -35,14 +35,12 @@ public class FileService {
 
     public void putUpdateByKey(String key, MultipartFile file) {
         log.info("Starting update process, key: {}", key);
-        this.validateFileName(key);
         storagePort.update(key, file);
         log.info("File has been updated successfully, key: {}", key);
     }
 
     public void deleteByKey(String key) {
         log.info("Starting delete process, key: {}", key);
-        this.validateFileName(key);
         storagePort.delete(key);
         log.info("File has been deleted successfully, key: {}", key);
     }
