@@ -1,6 +1,7 @@
 package com.tech.s3test.service;
 
 import com.tech.s3test.adapter.storage.StoragePort;
+import com.tech.s3test.configuration.log.Log;
 import com.tech.s3test.dto.res.FileResDto;
 import com.tech.s3test.dto.res.SaveFileResDto;
 import com.tech.s3test.exception.custom.MissingStatementException;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class FileService {
     private final StoragePort storagePort;
 
+    @Log
     public SaveFileResDto save(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
         this.validateFileName(originalFileName);
@@ -24,14 +26,17 @@ public class FileService {
         return new SaveFileResDto(key);
     }
 
+    @Log
     public FileResDto downloadByKey(String key) {
         return storagePort.get(key);
     }
 
+    @Log
     public void putUpdateByKey(String key, MultipartFile file) {
         storagePort.update(key, file);
     }
 
+    @Log
     public void deleteByKey(String key) {
         storagePort.delete(key);
     }
