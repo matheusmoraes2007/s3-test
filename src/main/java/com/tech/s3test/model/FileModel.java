@@ -25,7 +25,7 @@ public class FileModel {
     @NonNull
     private UserModel user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "file_key")
     @NonNull
     private String key;
 
