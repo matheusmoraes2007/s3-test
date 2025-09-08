@@ -3,7 +3,4 @@ spring:
     name: s3-test
 
 aws:
-  access-key: ${ACCESS_KEY}
-  secret-key: ${SECRET_KEY}
-  region: ${BUCKET_REGION}
   bucket-name: ${BUCKET_NAME}

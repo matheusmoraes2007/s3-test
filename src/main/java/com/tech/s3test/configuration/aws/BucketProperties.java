@@ -11,7 +11,4 @@ import org.springframework.context.annotation.PropertySource;
 @Data
 public class BucketProperties {
     private String bucketName;
-    private String region;
-    private String secretKey;
-    private String accessKey;
 }
