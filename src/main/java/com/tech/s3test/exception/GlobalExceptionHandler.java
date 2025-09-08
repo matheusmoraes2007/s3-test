@@ -1,6 +1,7 @@
 package com.tech.s3test.exception;
 
 import com.tech.s3test.dto.res.ExceptionResDto;
+import com.tech.s3test.exception.custom.InternalServerErrorException;
 import com.tech.s3test.exception.custom.MissingStatementException;
 import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
 import com.tech.s3test.exception.custom.ResourceNotFoundException;
@@ -40,6 +41,16 @@ public class GlobalExceptionHandler {
         return new ExceptionResDto(
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage(),
+                this.now()
+        );
+    }
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ExceptionResDto handleInternalServerErrorException(InternalServerErrorException ex) {
+        return new ExceptionResDto(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "An internal server error occurred",
                 this.now()
         );
     }

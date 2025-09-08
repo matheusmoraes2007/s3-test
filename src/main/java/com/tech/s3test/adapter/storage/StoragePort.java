@@ -2,6 +2,7 @@ package com.tech.s3test.adapter.storage;
 
 import com.tech.s3test.configuration.aws.BucketProperties;
 import com.tech.s3test.dto.res.FileResDto;
+import com.tech.s3test.exception.custom.InternalServerErrorException;
 import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
 import com.tech.s3test.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class StoragePort implements StorageAdapter {
         } catch (NoSuchKeyException e) {
             throw new ResourceNotFoundException("File not found");
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -84,7 +85,7 @@ public class StoragePort implements StorageAdapter {
                     .build();
             s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 }
