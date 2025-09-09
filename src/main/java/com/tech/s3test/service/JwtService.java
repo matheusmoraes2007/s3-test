@@ -23,7 +23,7 @@ public class JwtService {
                 .withExpiresAt(expiresAt)
                 .sign(this.getAlgorithm());
         return new JwtResDto(
-                jwtProperties.getPrefix(),
+                jwtProperties.getPrefix()+" ",
                 token,
                 expiresAt.toEpochMilli()
         );
