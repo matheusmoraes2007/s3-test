@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record CreateUserReqDto(
+public record UserReqDto(
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Email invalid format")
         @Size(min = 5, max = 50, message = "email must be between 5 and 100 characters")
