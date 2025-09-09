@@ -38,4 +38,6 @@ public class UserService {
         authenticationManager.authenticate(token);
         return jwtService.generateToken(reqDto.email());
     }
+
+
 }
