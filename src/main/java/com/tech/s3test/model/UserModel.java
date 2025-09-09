@@ -1,10 +1,7 @@
 package com.tech.s3test.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,10 +24,12 @@ public class UserModel implements UserDetails {
 
     @NonNull
     @Column(unique = true, nullable = false)
+    @Setter
     private String email;
 
     @NonNull
     @Column(nullable = false)
+    @Setter
     private String password;
 
     @NonNull
