@@ -32,4 +32,10 @@ public class UserController {
         userService.updateUser(user);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser() {
+        userService.deleteByEmail();
+        return ResponseEntity.ok().build();
+    }
 }

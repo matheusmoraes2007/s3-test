@@ -53,6 +53,10 @@ public class UserService {
         }
     }
 
+    public void deleteByEmail() {
+        userRepository.deleteByEmail(AuthUtils.getEmail());
+    }
+
     private UserModel getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
