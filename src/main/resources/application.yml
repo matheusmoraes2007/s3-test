@@ -16,3 +16,9 @@ spring:
 
 aws:
   bucket-name: ${BUCKET_NAME}
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret: ${JWT_SECRET}
+  prefix: ${JWT_PREFIX}
+  expiration: ${JWT_EXPIRATION}
