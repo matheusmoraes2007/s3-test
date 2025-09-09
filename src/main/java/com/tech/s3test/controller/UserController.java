@@ -1,6 +1,7 @@
 package com.tech.s3test.controller;
 
 import com.tech.s3test.dto.req.UserReqDto;
+import com.tech.s3test.dto.res.JwtResDto;
 import com.tech.s3test.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class UserController {
     public ResponseEntity<Void> createUser(@Valid @RequestBody UserReqDto user) {
         userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtResDto> login(@Valid @RequestBody UserReqDto user) {
+        return ResponseEntity.ok().body(userService.login(user));
     }
 }
