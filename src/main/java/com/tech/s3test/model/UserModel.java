@@ -26,7 +26,7 @@ public class UserModel implements UserDetails {
     private Long id;
 
     @NonNull
-    @Column(unique = true,  nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @NonNull
@@ -42,11 +42,15 @@ public class UserModel implements UserDetails {
 
     @Column(nullable = false, updatable = false, name = "created_at")
     @CreationTimestamp
-    private OffsetDateTime  createdAt;
+    private OffsetDateTime createdAt;
 
     @Column(nullable = false, name = "updated_at")
     @UpdateTimestamp
-    private OffsetDateTime  updatedAt;
+    private OffsetDateTime updatedAt;
+
+    public UserModel(@NonNull String email) {
+        this.email = email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
