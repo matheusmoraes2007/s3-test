@@ -29,8 +29,7 @@ public class UserService {
         this.verifyIfExistsByEmail(reqDto.email());
         UserModel newUser = new UserModel(
                 reqDto.email(),
-                passwordEncoder.encode(reqDto.password()),
-                UUID.randomUUID().toString()
+                passwordEncoder.encode(reqDto.password())
         );
         userRepository.save(newUser);
     }

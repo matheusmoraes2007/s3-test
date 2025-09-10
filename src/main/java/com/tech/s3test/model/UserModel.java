@@ -34,10 +34,6 @@ public class UserModel implements UserDetails {
     @Setter
     private String password;
 
-    @NonNull
-    @Column(nullable = false, unique = true, name = "public_id")
-    private String publicId;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<FileModel> files = new ArrayList<>();
 
