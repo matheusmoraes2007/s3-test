@@ -1,6 +1,6 @@
 package com.tech.s3test.service;
 
-import com.tech.s3test.configuration.security.AuthUtils;
+import com.tech.s3test.util.AuthUtils;
 import com.tech.s3test.dto.req.UpdateUserReqDto;
 import com.tech.s3test.dto.req.UserReqDto;
 import com.tech.s3test.dto.res.JwtResDto;

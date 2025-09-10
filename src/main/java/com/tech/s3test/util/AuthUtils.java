@@ -1,4 +1,4 @@
-package com.tech.s3test.configuration.security;
+package com.tech.s3test.util;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 
