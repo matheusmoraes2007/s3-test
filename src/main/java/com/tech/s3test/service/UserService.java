@@ -4,6 +4,7 @@ import com.tech.s3test.configuration.security.AuthUtils;
 import com.tech.s3test.dto.req.UpdateUserReqDto;
 import com.tech.s3test.dto.req.UserReqDto;
 import com.tech.s3test.dto.res.JwtResDto;
+import com.tech.s3test.dto.res.UserResDto;
 import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
 import com.tech.s3test.exception.custom.ResourceNotFoundException;
 import com.tech.s3test.model.UserModel;
@@ -43,7 +44,7 @@ public class UserService {
 
     @Transactional
     public void updateUser(UpdateUserReqDto reqDto) {
-        UserModel User = this.getUserByEmail(AuthUtils.getEmail());
+        UserModel User = this.findUserByEmail(AuthUtils.getEmail());
         if (reqDto.email() != null && !reqDto.email().isBlank() && !reqDto.email().equals(AuthUtils.getEmail())) {
             this.verifyIfExistsByEmail(reqDto.email());
             User.setEmail(reqDto.email());
@@ -57,7 +58,7 @@ public class UserService {
         userRepository.deleteByEmail(AuthUtils.getEmail());
     }
 
-    private UserModel getUserByEmail(String email) {
+    private UserModel findUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
