@@ -4,7 +4,6 @@ import com.tech.s3test.configuration.security.AuthUtils;
 import com.tech.s3test.dto.req.UpdateUserReqDto;
 import com.tech.s3test.dto.req.UserReqDto;
 import com.tech.s3test.dto.res.JwtResDto;
-import com.tech.s3test.dto.res.UserResDto;
 import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
 import com.tech.s3test.exception.custom.ResourceNotFoundException;
 import com.tech.s3test.model.UserModel;
