@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "files")
+@SoftDelete
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter

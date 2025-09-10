@@ -53,6 +53,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void deleteByEmail() {
         userRepository.deleteByEmail(AuthUtils.getEmail());
     }

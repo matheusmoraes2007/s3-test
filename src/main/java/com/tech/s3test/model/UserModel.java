@@ -3,6 +3,7 @@ package com.tech.s3test.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@SoftDelete
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
