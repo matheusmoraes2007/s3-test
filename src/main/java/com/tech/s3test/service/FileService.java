@@ -47,12 +47,16 @@ public class FileService {
 
     @Log
     public void putUpdateByKey(String key, MultipartFile file) {
+        this.assertFileOwnership(key);
         storagePort.update(key, file);
     }
 
     @Log
+    @Transactional
     public void deleteByKey(String key) {
+        this.assertFileOwnership(key);
         storagePort.delete(key);
+        fileRepository.deleteByKey(key);
     }
 
     private String getKey(MultipartFile file) {
