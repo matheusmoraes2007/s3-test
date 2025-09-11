@@ -5,9 +5,9 @@ import com.tech.s3test.dto.req.UpdateUserReqDto;
 import com.tech.s3test.dto.req.UserReqDto;
 import com.tech.s3test.dto.res.JwtResDto;
 import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
-import com.tech.s3test.exception.custom.ResourceNotFoundException;
 import com.tech.s3test.model.UserModel;
 import com.tech.s3test.repository.UserRepository;
+import com.tech.s3test.util.UserUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +22,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserUtils userUtils;
 
     public void createUser(UserReqDto reqDto) {
         this.verifyIfExistsByEmail(reqDto.email());
@@ -40,7 +41,7 @@ public class UserService {
 
     @Transactional
     public void updateUser(UpdateUserReqDto reqDto) {
-        UserModel User = this.findUserByEmail(AuthUtils.getEmail());
+        UserModel User = userUtils.findAuthenticatedUser();
         if (reqDto.email() != null && !reqDto.email().isBlank() && !reqDto.email().equals(AuthUtils.getEmail())) {
             this.verifyIfExistsByEmail(reqDto.email());
             User.setEmail(reqDto.email());
@@ -53,11 +54,6 @@ public class UserService {
     @Transactional
     public void deleteByEmail() {
         userRepository.deleteByEmail(AuthUtils.getEmail());
-    }
-
-    private UserModel findUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     private void verifyIfExistsByEmail(String email) {
