@@ -40,7 +40,8 @@ public class FileService {
     }
 
     @Log
-    public FileResDto downloadByKey(String key) {
+    public FileResDto getFile(String key) {
+        this.assertFileOwnership(key);
         return storagePort.get(key);
     }
 
@@ -64,5 +65,12 @@ public class FileService {
         }
         String fileExtension = fileName.substring(file.getOriginalFilename().lastIndexOf("."));
         return UUID.randomUUID() + fileExtension;
+    }
+
+    private void assertFileOwnership(String key) {
+        Long userId = userUtils.findAuthenticatedUser().getId();
+        if (!fileRepository.existsByKeyAndUserId(key, userId)) {
+            throw new RuntimeException("File not found");
+        }
     }
 }

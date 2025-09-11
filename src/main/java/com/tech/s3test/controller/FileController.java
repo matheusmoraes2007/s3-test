@@ -25,13 +25,9 @@ public class FileController {
     }
 
     @GetMapping("/{key}")
-    public ResponseEntity<byte[]> downloadByKey(@PathVariable("key") String key) {
-        FileResDto file = fileService.downloadByKey(key);
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.parseMediaType(file.contentType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + key + "\"")
-                .body(file.file());
+    public ResponseEntity<FileResDto> downloadByKey(@PathVariable("key") String key) {
+        FileResDto file = fileService.getFile(key);
+        return ResponseEntity.ok(file);
     }
 
     @PutMapping(value = "/{key}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
