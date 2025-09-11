@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.time.OffsetDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -39,9 +38,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
-                ExceptionResDto errorDto = new ExceptionResDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), OffsetDateTime.now());
+                ExceptionResDto errorDto = new ExceptionResDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
                 String jsonResponse = new ObjectMapper().writeValueAsString(errorDto);
                 response.getWriter().write(jsonResponse);
+                return;
             }
         }
         filterChain.doFilter(request, response);
