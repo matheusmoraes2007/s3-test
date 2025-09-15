@@ -8,17 +8,21 @@ import com.tech.s3test.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
 public class StoragePort implements StorageAdapter {
     private final S3Client s3Client;
+    private final S3Presigner s3Presigner;
     private final BucketProperties bucketProperties;
 
     @Override
@@ -35,15 +39,17 @@ public class StoragePort implements StorageAdapter {
                     .bucket(bucketProperties.getBucketName())
                     .key(key)
                     .build();
-            ResponseInputStream<GetObjectResponse> s3Object = s3Client.getObject(getObjectRequest);
+            GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
+                    .signatureDuration(Duration.ofMinutes(5))
+                    .getObjectRequest(getObjectRequest)
+                    .build();
             return new FileResDto(
-                    s3Object.readAllBytes(),
-                    s3Object.response().contentType()
+                    s3Presigner.presignGetObject(getObjectPresignRequest)
+                            .url()
+                            .toString()
             );
         } catch (NoSuchKeyException e) {
             throw new ResourceNotFoundException("File not found");
-        } catch (IOException e) {
-            throw new InternalServerErrorException(e.getMessage());
         }
     }
 

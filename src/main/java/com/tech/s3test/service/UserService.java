@@ -1,0 +1,64 @@
+package com.tech.s3test.service;
+
+import com.tech.s3test.util.AuthUtils;
+import com.tech.s3test.dto.req.UpdateUserReqDto;
+import com.tech.s3test.dto.req.UserReqDto;
+import com.tech.s3test.dto.res.JwtResDto;
+import com.tech.s3test.exception.custom.ResourceAlreadyExistsException;
+import com.tech.s3test.model.UserModel;
+import com.tech.s3test.repository.UserRepository;
+import com.tech.s3test.util.UserUtils;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final UserUtils userUtils;
+
+    public void createUser(UserReqDto reqDto) {
+        this.verifyIfExistsByEmail(reqDto.email());
+        UserModel newUser = new UserModel(
+                reqDto.email(),
+                passwordEncoder.encode(reqDto.password())
+        );
+        userRepository.save(newUser);
+    }
+
+    public JwtResDto login(UserReqDto reqDto) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(reqDto.email(), reqDto.password());
+        authenticationManager.authenticate(token);
+        return jwtService.generateToken(reqDto.email());
+    }
+
+    @Transactional
+    public void updateUser(UpdateUserReqDto reqDto) {
+        UserModel User = userUtils.findAuthenticatedUser();
+        if (reqDto.email() != null && !reqDto.email().isBlank() && !reqDto.email().equals(AuthUtils.getEmail())) {
+            this.verifyIfExistsByEmail(reqDto.email());
+            User.setEmail(reqDto.email());
+        }
+        if (reqDto.password() != null && !reqDto.password().isBlank()) {
+            User.setPassword(passwordEncoder.encode(reqDto.password()));
+        }
+    }
+
+    @Transactional
+    public void deleteByEmail() {
+        userRepository.deleteByEmail(AuthUtils.getEmail());
+    }
+
+    private void verifyIfExistsByEmail(String email) {
+        if (userRepository.existsByEmail(email)) {
+            throw new ResourceAlreadyExistsException("Email already exists");
+        }
+    }
+}

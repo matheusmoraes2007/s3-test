@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.OffsetDateTime;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -20,8 +18,7 @@ public class GlobalExceptionHandler {
     public ExceptionResDto handleResourceNotFoundException(ResourceNotFoundException ex) {
         return new ExceptionResDto(
                 HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                this.now()
+                ex.getMessage()
         );
     }
 
@@ -30,8 +27,7 @@ public class GlobalExceptionHandler {
     public ExceptionResDto handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
         return new ExceptionResDto(
                 HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                this.now()
+                ex.getMessage()
         );
     }
 
@@ -40,8 +36,7 @@ public class GlobalExceptionHandler {
     public ExceptionResDto handleMissingStatementException(MissingStatementException ex) {
         return new ExceptionResDto(
                 HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                this.now()
+                ex.getMessage()
         );
     }
 
@@ -50,12 +45,7 @@ public class GlobalExceptionHandler {
     public ExceptionResDto handleInternalServerErrorException(InternalServerErrorException ex) {
         return new ExceptionResDto(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "An internal server error occurred",
-                this.now()
+                "An internal server error occurred"
         );
-    }
-
-    private OffsetDateTime now() {
-        return OffsetDateTime.now();
     }
 }
